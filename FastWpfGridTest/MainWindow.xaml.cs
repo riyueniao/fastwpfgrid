@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Path = System.IO.Path;
 
 namespace FastWpfGridTest
 {
@@ -159,9 +161,10 @@ namespace FastWpfGridTest
 
             encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
-            using (var fs = System.IO.File.OpenWrite("c:/test/file1.png"))
+
+            using (var sw = File.AppendText(Path.Combine(Directory.GetCurrentDirectory(), "sample.png")))
             {
-                encoder.Save(fs);
+                encoder.Save(sw.BaseStream); 
             }
 
             textImage3.Stretch = Stretch.None;
